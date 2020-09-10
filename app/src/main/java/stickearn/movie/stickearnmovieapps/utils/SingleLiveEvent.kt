@@ -1,4 +1,5 @@
 package stickearn.movie.stickearnmovieapps.utils
+
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData

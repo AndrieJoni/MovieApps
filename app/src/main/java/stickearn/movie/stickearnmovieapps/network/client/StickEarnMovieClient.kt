@@ -1,11 +1,10 @@
 package stickearn.movie.stickearnmovieapps.network.client
 
-import okhttp3.*
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import stickearn.movie.stickearnmovieapps.BuildConfig
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 

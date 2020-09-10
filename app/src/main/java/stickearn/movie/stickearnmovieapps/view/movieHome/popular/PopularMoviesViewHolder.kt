@@ -1,6 +1,5 @@
 package stickearn.movie.stickearnmovieapps.view.movieHome.popular
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso

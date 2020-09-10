@@ -17,9 +17,9 @@ class HomeMovieViewModel(private val movieRepository: MovieRepository) : ViewMod
     val goToDetailMovieEvent = SingleLiveEvent<MovieData>()
     val goToFavoriteActivityEvent = SingleLiveEvent<Any>()
 
-    private var popularMoviesDataSourceFactory: PopularMoviesDataSourceFactory? = null
-    private var topRatedMoviesDataSourceFactory: TopRatedMoviesDataSourceFactory? = null
-    private var nowPlayingMoviesDataSourceFactory: NowPlayingMoviesDataSourceFactory? = null
+    var popularMoviesDataSourceFactory: PopularMoviesDataSourceFactory? = null
+    var topRatedMoviesDataSourceFactory: TopRatedMoviesDataSourceFactory? = null
+    var nowPlayingMoviesDataSourceFactory: NowPlayingMoviesDataSourceFactory? = null
 
     private fun initializePageConfig(): PagedList.Config {
 
@@ -75,5 +75,17 @@ class HomeMovieViewModel(private val movieRepository: MovieRepository) : ViewMod
 
     fun favoriteIconClicked() {
         goToFavoriteActivityEvent.call()
+    }
+
+    fun refreshPopularMovie() {
+        popularMoviesDataSourceFactory?.popularMoviesDataSource?.invalidate()
+    }
+
+    fun refreshTopRatedMovie() {
+        topRatedMoviesDataSourceFactory?.topRatedMoviesDataSource?.invalidate()
+    }
+
+    fun refreshNowPlayingMovie() {
+        nowPlayingMoviesDataSourceFactory?.nowPlayingMoviesDataSource?.invalidate()
     }
 }

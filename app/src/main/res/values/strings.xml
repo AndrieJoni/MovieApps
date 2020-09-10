@@ -12,4 +12,5 @@
     <string name="no_favorite_movies">You dont have favorite movie</string>
     <string name="marked_favorite_movies">You marked this movie as your favorite</string>
     <string name="unmarked_favorite_movies">You unmarked this movie as your favorite</string>
+    <string name="retry">retry</string>
 </resources>

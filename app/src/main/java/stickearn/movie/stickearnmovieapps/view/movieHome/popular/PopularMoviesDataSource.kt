@@ -35,7 +35,6 @@ class PopularMoviesDataSource(
                     } else {
                         callback.onResult(response.listOfMovies, null, 2)
                     }
-
                 }
 
             } catch (e: Exception) {

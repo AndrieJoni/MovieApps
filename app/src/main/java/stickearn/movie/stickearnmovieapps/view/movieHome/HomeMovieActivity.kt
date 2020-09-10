@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_home_movie.*
 import kotlinx.android.synthetic.main.layout_home_now_playing_movies.*
 import kotlinx.android.synthetic.main.layout_home_popular_movies.*
 import kotlinx.android.synthetic.main.layout_home_top_rated_movies.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.view.movieDetails.DetailMovieActivity
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.FavoriteMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesAdapter
 
 class HomeMovieActivity : AppCompatActivity() {
@@ -87,6 +89,10 @@ class HomeMovieActivity : AppCompatActivity() {
 
             startActivity(intent)
         })
+
+        homeMovieViewModel.goToFavoriteActivityEvent.observe(this, {
+            startActivity(Intent(this, FavoriteMovieActivity::class.java))
+        })
     }
 
     private fun initEventListener() {
@@ -94,5 +100,10 @@ class HomeMovieActivity : AppCompatActivity() {
         popularMoviesAdapter.onMovieListener = movieListener
         topRatedMoviesAdapter.onMovieListener = movieListener
         nowPlayingMoviesAdapter.onMovieListener = movieListener
+
+        toolbar.menu.findItem(R.id.menuFavoriteHome).setOnMenuItemClickListener {
+            homeMovieViewModel.favoriteIconClicked()
+            true
+        }
     }
 }

@@ -1,5 +1,6 @@
 package stickearn.movie.stickearnmovieapps.database
 
+import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import androidx.room.Query
 interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    suspend fun getAllMovies(): List<MovieEntity>
+    fun getAllMovies(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM movie WHERE id == :id")
     suspend fun findMovieById(id: Int): List<MovieEntity>

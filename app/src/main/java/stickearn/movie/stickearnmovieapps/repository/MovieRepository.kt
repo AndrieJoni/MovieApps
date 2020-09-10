@@ -18,7 +18,7 @@ class MovieRepository(
     suspend fun getMovieReviews(movieId: String, page: String) =
         movieDbService.getMovieReviews(movieId, page)
 
-    suspend fun getFavoriteMovies() = movieDatabase.movieDao().getAllMovies()
+    fun getFavoriteMovies() = movieDatabase.movieDao().getAllMovies()
 
     suspend fun insertMovies(movieEntity: MovieEntity) =
         movieDatabase.movieDao().insertMovie(movieEntity)

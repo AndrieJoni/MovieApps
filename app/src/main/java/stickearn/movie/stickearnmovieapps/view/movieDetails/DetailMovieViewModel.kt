@@ -106,7 +106,8 @@ class DetailMovieViewModel(
             movieData.id,
             movieData.title,
             movieData.releaseDate,
-            movieData.overview
+            movieData.overview,
+            movieData.posterPath
         )
     }
 }

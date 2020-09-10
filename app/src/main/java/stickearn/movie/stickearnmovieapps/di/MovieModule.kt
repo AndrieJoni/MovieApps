@@ -7,6 +7,7 @@ import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.network.MovieDbService
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
 import stickearn.movie.stickearnmovieapps.view.movieDetails.DetailMovieViewModel
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.FavoriteMovieViewModel
 import stickearn.movie.stickearnmovieapps.view.movieHome.HomeMovieViewModel
 
 val movieModule = module {
@@ -20,4 +21,5 @@ val movieModule = module {
 
     viewModel { HomeMovieViewModel(get()) }
     viewModel { (movieData: MovieData) -> DetailMovieViewModel(movieData, get()) }
+    viewModel { FavoriteMovieViewModel(get()) }
 }

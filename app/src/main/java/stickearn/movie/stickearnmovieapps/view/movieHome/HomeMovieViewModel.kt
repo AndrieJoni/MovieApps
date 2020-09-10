@@ -15,6 +15,7 @@ import stickearn.movie.stickearnmovieapps.view.movieHome.topRated.TopRatedMovies
 class HomeMovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
     val goToDetailMovieEvent = SingleLiveEvent<MovieData>()
+    val goToFavoriteActivityEvent = SingleLiveEvent<Any>()
 
     private var popularMoviesDataSourceFactory: PopularMoviesDataSourceFactory? = null
     private var topRatedMoviesDataSourceFactory: TopRatedMoviesDataSourceFactory? = null
@@ -70,5 +71,9 @@ class HomeMovieViewModel(private val movieRepository: MovieRepository) : ViewMod
 
     fun movieClicked(movieData: MovieData) {
         goToDetailMovieEvent.postValue(movieData)
+    }
+
+    fun favoriteIconClicked() {
+        goToFavoriteActivityEvent.call()
     }
 }

@@ -23,6 +23,7 @@ class DetailMovieViewModel(
     val showMovieDataEvent = SingleLiveEvent<MovieData>()
     val saveFavoriteMovieEvent = SingleLiveEvent<Boolean>()
     val changeFavoriteIconColorEvent = SingleLiveEvent<Boolean>()
+    val shareLinkEvent = SingleLiveEvent<String>()
 
     private var isFavorite = false
 
@@ -98,6 +99,10 @@ class DetailMovieViewModel(
                 e.printStackTrace()
             }
         }
+    }
+
+    fun shareIconClicked() {
+        shareLinkEvent.postValue(movieData.posterPath)
     }
 
     private fun mappingToEntity(movieData: MovieData): MovieEntity {

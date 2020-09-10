@@ -1,5 +1,6 @@
 package stickearn.movie.stickearnmovieapps.view.movieDetails
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.utils.PaginationStatus
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieAdapter
+
 
 class DetailMovieActivity : AppCompatActivity() {
 
@@ -117,6 +119,16 @@ class DetailMovieActivity : AppCompatActivity() {
                     .show()
             }
         })
+
+        detailMovieViewModel.shareLinkEvent.observe(this, {
+
+            val intent = Intent(Intent.ACTION_SEND)
+
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, it)
+
+            startActivity(Intent.createChooser(intent, "Share"))
+        })
     }
 
     private fun initEventListener() {
@@ -127,6 +139,10 @@ class DetailMovieActivity : AppCompatActivity() {
 
         ivFavoriteMovie.setOnClickListener {
             detailMovieViewModel.favoriteIconClicked()
+        }
+
+        ivShareMovie.setOnClickListener {
+            detailMovieViewModel.shareIconClicked()
         }
     }
 

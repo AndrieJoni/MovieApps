@@ -17,6 +17,8 @@ class TopRatedMoviesDataSource(
 
 ) : PageKeyedDataSource<Int, MovieData>() {
 
+    private suspend fun getTopRatedMovieData(page: String) = movieRepository.getTopRatedMovies(page)
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieData>
@@ -26,7 +28,7 @@ class TopRatedMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getTopRatedMovies("1")
+                val response = getTopRatedMovieData("1")
 
                 withContext(Dispatchers.Main) {
 
@@ -52,7 +54,7 @@ class TopRatedMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getTopRatedMovies(params.key.toString())
+                val response = getTopRatedMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
                     callback.onResult(response.listOfMovies, params.key + 1)

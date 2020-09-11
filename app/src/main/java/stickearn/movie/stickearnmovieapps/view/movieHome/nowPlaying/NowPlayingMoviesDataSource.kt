@@ -17,6 +17,9 @@ class NowPlayingMoviesDataSource(
 
 ) : PageKeyedDataSource<Int, MovieData>() {
 
+    private suspend fun getNowPlayingMovieData(page: String) =
+        movieRepository.getNowPlayingMovies(page)
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieData>
@@ -26,7 +29,7 @@ class NowPlayingMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getNowPlayingMovies("1")
+                val response = getNowPlayingMovieData("1")
 
                 withContext(Dispatchers.Main) {
 
@@ -52,7 +55,7 @@ class NowPlayingMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getNowPlayingMovies(params.key.toString())
+                val response = getNowPlayingMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
                     callback.onResult(response.listOfMovies, params.key + 1)

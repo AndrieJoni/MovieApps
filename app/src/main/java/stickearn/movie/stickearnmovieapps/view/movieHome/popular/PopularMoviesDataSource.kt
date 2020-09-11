@@ -17,6 +17,8 @@ class PopularMoviesDataSource(
 
 ) : PageKeyedDataSource<Int, MovieData>() {
 
+    private suspend fun getPopularMovieData(page: String) = movieRepository.getPopularMovies(page)
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieData>
@@ -26,7 +28,7 @@ class PopularMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getPopularMovies("1")
+                val response = getPopularMovieData("1")
 
                 withContext(Dispatchers.Main) {
 
@@ -51,7 +53,7 @@ class PopularMoviesDataSource(
 
             try {
 
-                val response = movieRepository.getPopularMovies(params.key.toString())
+                val response = getPopularMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
                     callback.onResult(response.listOfMovies, params.key + 1)

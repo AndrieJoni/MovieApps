@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
@@ -14,6 +14,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
+import stickearn.movie.stickearnmovieapps.data.MovieData
+import stickearn.movie.stickearnmovieapps.data.MovieReviewData
 import stickearn.movie.stickearnmovieapps.utils.PaginationStatus
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieAdapter
 
@@ -49,85 +51,27 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun initObserver() {
 
         detailMovieViewModel.showMovieDataEvent.observe(this, {
-
-            cToolbarDetailMovie.title = it.title
-            tvMovieReleaseDate.text = it.releaseDate
-
-            Picasso
-                .get()
-                .load(
-                    String.format(
-                        "%s/t/p/w500/%s",
-                        BuildConfig.BASE_TMDB_IMAGE_URL,
-                        it.backdropPath
-                    )
-                )
-                .fit()
-                .into(ivMovieToolbar)
-
-            tvMovieName.text = it.title
-
-            tvMovieDescription.text = it.overview
+            renderMovieData(it)
         })
 
         detailMovieViewModel.initializeReviewsMovieLiveData().observe(this, {
-            reviewsMovieAdapter.submitList(it)
+            renderMovieReviews(it)
         })
 
         detailMovieViewModel.reviewsMovieDataSourceFactory?.paginationStatus?.observe(this, {
-
-            when (it) {
-                is PaginationStatus.Empty -> tvNoReviewsMovie.isVisible = true
-            }
+            checkMovieReviewsPaginationStatus(it)
         })
 
         detailMovieViewModel.changeFavoriteIconColorEvent.observe(this, {
-
-            if (it) ivFavoriteMovie.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.ic_twotone_favorite_24
-                )
-            ) else {
-                ivFavoriteMovie.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.ic_twotone_unfavorite_24
-                    )
-                )
-            }
+            renderFavoriteIcon(it)
         })
 
-        detailMovieViewModel.saveFavoriteMovieEvent.observe(this, Observer {
-
-            if (it) {
-                Snackbar
-                    .make(
-                        coordinator_layout,
-                        getString(R.string.marked_favorite_movies),
-                        Snackbar.LENGTH_SHORT
-                    ).setAnchorView(clMenuDetailMovie)
-                    .show()
-
-            } else {
-                Snackbar
-                    .make(
-                        coordinator_layout,
-                        getString(R.string.unmarked_favorite_movies),
-                        Snackbar.LENGTH_SHORT
-                    ).setAnchorView(clMenuDetailMovie)
-                    .show()
-            }
+        detailMovieViewModel.saveFavoriteMovieEvent.observe(this, {
+            renderSaveFavoriteSnackbar(it)
         })
 
         detailMovieViewModel.shareLinkEvent.observe(this, {
-
-            val intent = Intent(Intent.ACTION_SEND)
-
-            intent.type = "text/plain"
-            intent.putExtra(Intent.EXTRA_TEXT, it)
-
-            startActivity(Intent.createChooser(intent, "Share"))
+            shareMovie(it)
         })
     }
 
@@ -138,11 +82,94 @@ class DetailMovieActivity : AppCompatActivity() {
         }
 
         ivFavoriteMovie.setOnClickListener {
-            detailMovieViewModel.favoriteIconClicked()
+            favoriteIconClicked()
         }
 
         ivShareMovie.setOnClickListener {
-            detailMovieViewModel.shareIconClicked()
+            shareIconClicked()
+        }
+    }
+
+    private fun favoriteIconClicked() {
+        detailMovieViewModel.favoriteIconClicked()
+    }
+
+    private fun shareIconClicked() {
+        detailMovieViewModel.shareIconClicked()
+    }
+
+    private fun renderMovieData(movieData: MovieData) {
+
+        cToolbarDetailMovie.title = movieData.title
+        tvMovieReleaseDate.text = movieData.releaseDate
+
+        Picasso
+            .get()
+            .load(
+                String.format(
+                    "%s/t/p/w500/%s",
+                    BuildConfig.BASE_TMDB_IMAGE_URL,
+                    movieData.backdropPath
+                )
+            )
+            .fit()
+            .into(ivMovieToolbar)
+
+        tvMovieName.text = movieData.title
+
+        tvMovieDescription.text = movieData.overview
+
+    }
+
+    private fun renderMovieReviews(movieReviews: PagedList<MovieReviewData>) {
+        reviewsMovieAdapter.submitList(movieReviews)
+    }
+
+    private fun changeFavoriteIcon(drawableId: Int) {
+        ivFavoriteMovie.setImageDrawable(
+            ContextCompat.getDrawable(
+                this,
+                drawableId
+            )
+        )
+    }
+
+    private fun renderFavoriteIcon(isFavorite: Boolean) {
+        if (isFavorite) changeFavoriteIcon(R.drawable.ic_twotone_favorite_24)
+        else changeFavoriteIcon(R.drawable.ic_twotone_unfavorite_24)
+    }
+
+    private fun showSnackBar(message: String) {
+
+        Snackbar
+            .make(
+                coordinator_layout,
+                message,
+                Snackbar.LENGTH_SHORT
+            ).setAnchorView(clMenuDetailMovie)
+            .show()
+    }
+
+    private fun renderSaveFavoriteSnackbar(isFavorite: Boolean) {
+        if (isFavorite) {
+            showSnackBar(getString(R.string.marked_favorite_movies))
+        } else {
+            showSnackBar(getString(R.string.unmarked_favorite_movies))
+        }
+    }
+
+    private fun shareMovie(message: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+
+        startActivity(Intent.createChooser(intent, "Share"))
+    }
+
+    private fun checkMovieReviewsPaginationStatus(paginationStatus: PaginationStatus) {
+        when (paginationStatus) {
+            is PaginationStatus.Empty -> tvNoReviewsMovie.isVisible = true
         }
     }
 

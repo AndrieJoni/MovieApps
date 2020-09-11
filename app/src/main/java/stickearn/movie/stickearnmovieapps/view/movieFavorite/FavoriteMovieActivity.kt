@@ -3,10 +3,12 @@ package stickearn.movie.stickearnmovieapps.view.movieFavorite
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import kotlinx.android.synthetic.main.activity_favorite_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import stickearn.movie.stickearnmovieapps.R
+import stickearn.movie.stickearnmovieapps.database.MovieEntity
 
 class FavoriteMovieActivity : AppCompatActivity() {
 
@@ -46,15 +48,19 @@ class FavoriteMovieActivity : AppCompatActivity() {
     private fun initObserver() {
 
         favoriteMovieViewModel.getFavoriteMoviesData().observe(this, {
-
-            if (pbFavoriteMovies.isVisible) pbFavoriteMovies.isVisible = false
-
-            if (isFirstTimeLoad && it.size == 0) {
-                tvNoFavoriteMovies.isVisible = true
-                isFirstTimeLoad = false
-            }
-
-            movieFavoriteAdapter.submitList(it)
+            renderFavoriteMovieData(it)
         })
+    }
+
+    private fun renderFavoriteMovieData(favoriteMovieData: PagedList<MovieEntity>) {
+
+        if (pbFavoriteMovies.isVisible) pbFavoriteMovies.isVisible = false
+
+        if (isFirstTimeLoad && favoriteMovieData.size == 0) {
+            tvNoFavoriteMovies.isVisible = true
+            isFirstTimeLoad = false
+        }
+
+        movieFavoriteAdapter.submitList(favoriteMovieData)
     }
 }

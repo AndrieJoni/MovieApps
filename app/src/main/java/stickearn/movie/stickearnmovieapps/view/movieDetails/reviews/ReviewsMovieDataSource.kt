@@ -17,6 +17,9 @@ class ReviewsMovieDataSource(
     private val scope: CoroutineScope
 ) : PageKeyedDataSource<Int, MovieReviewData>() {
 
+    private suspend fun getMovieReviewsData(movieId: String) =
+        movieRepository.getMovieReviews(movieId = id, movieId)
+
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, MovieReviewData>
@@ -26,7 +29,7 @@ class ReviewsMovieDataSource(
 
             try {
 
-                val response = movieRepository.getMovieReviews(movieId = id, "1")
+                val response = getMovieReviewsData("1")
 
                 withContext(Dispatchers.Main) {
 
@@ -51,7 +54,7 @@ class ReviewsMovieDataSource(
 
             try {
 
-                val response = movieRepository.getMovieReviews(id, params.key.toString())
+                val response = getMovieReviewsData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
                     callback.onResult(response.listOfMoviesReviews, params.key + 1)

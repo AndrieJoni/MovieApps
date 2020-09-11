@@ -9,12 +9,12 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        app:menu="@menu/menu_home_movie"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_home_movie"
         app:title="Movie" />
 
     <ScrollView
@@ -23,15 +23,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
-            <include layout="@layout/layout_home_popular_movies"/>
+            <include layout="@layout/layout_home_popular_movies" />
 
-            <include layout="@layout/layout_home_top_rated_movies"/>
+            <include layout="@layout/layout_home_top_rated_movies" />
 
-            <include layout="@layout/layout_home_now_playing_movies"/>
+            <include layout="@layout/layout_home_now_playing_movies" />
 
         </LinearLayout>
 

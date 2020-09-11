@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.utils
+package stickearn.movie.stickearnmovieapps.view
 
 sealed class PaginationStatus {
 

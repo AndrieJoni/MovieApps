@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import stickearn.movie.stickearnmovieapps.utils.PaginationStatus
+import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
 
 class NowPlayingMoviesDataSource(

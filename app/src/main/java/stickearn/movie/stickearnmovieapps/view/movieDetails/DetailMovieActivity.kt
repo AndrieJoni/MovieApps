@@ -18,7 +18,7 @@ import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.data.MovieReviewData
-import stickearn.movie.stickearnmovieapps.utils.PaginationStatus
+import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieAdapter
 
 

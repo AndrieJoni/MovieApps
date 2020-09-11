@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.layout_home_top_rated_movies.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
-import stickearn.movie.stickearnmovieapps.utils.PaginationStatus
+import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.view.movieDetails.DetailMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieFavorite.FavoriteMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesAdapter

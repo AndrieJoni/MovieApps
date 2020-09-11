@@ -7,22 +7,22 @@ import stickearn.movie.stickearnmovieapps.BuildConfig
 
 interface MovieDbService {
 
-    @GET("movie/popular?api_key=${BuildConfig.TMDB_API_KEY}")
+    @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("page") page: String
     ): ListOfMoviesResponse
 
-    @GET("movie/top_rated?api_key=${BuildConfig.TMDB_API_KEY}")
+    @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("page") page: String
     ): ListOfMoviesResponse
 
-    @GET("movie/now_playing?api_key=${BuildConfig.TMDB_API_KEY}")
+    @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("page") page: String
     ): ListOfMoviesResponse
 
-    @GET("movie/{movie_id}/reviews?api_key=${BuildConfig.TMDB_API_KEY}")
+    @GET("movie/{movie_id}/reviews")
     suspend fun getMovieReviews(
         @Path("movie_id") movieId: String,
         @Query("page") page: String

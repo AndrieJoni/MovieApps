@@ -16,6 +16,7 @@ class StickEarnMovieClient {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         return OkHttpClient.Builder()
+            .addInterceptor(BaseInterceptor())
             .addInterceptor(interceptor)
             .connectTimeout(3, TimeUnit.MINUTES)
             .writeTimeout(3, TimeUnit.MINUTES)

@@ -102,7 +102,7 @@ class DetailMovieViewModel(
     }
 
     fun shareIconClicked() {
-        shareLinkEvent.postValue(movieData.posterPath)
+        shareLinkEvent.postValue(movieData.title)
     }
 
     private fun mappingToEntity(movieData: MovieData): MovieEntity {

@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
@@ -101,7 +103,11 @@ class DetailMovieActivity : AppCompatActivity() {
     private fun renderMovieData(movieData: MovieData) {
 
         cToolbarDetailMovie.title = movieData.title
-        tvMovieReleaseDate.text = movieData.releaseDate
+
+        tvMovieReleaseDate.text = LocalDate.parse(
+            movieData.releaseDate,
+            DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        ).format(DateTimeFormatter.ofPattern("LLL dd,yyyy"))
 
         Picasso
             .get()

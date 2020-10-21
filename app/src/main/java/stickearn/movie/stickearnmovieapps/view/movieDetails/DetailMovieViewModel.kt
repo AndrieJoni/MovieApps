@@ -1,6 +1,7 @@
 package stickearn.movie.stickearnmovieapps.view.movieDetails
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
@@ -20,7 +21,7 @@ class DetailMovieViewModel(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
-    val showMovieDataEvent = SingleLiveEvent<MovieData>()
+    val showMovieData = MutableLiveData<MovieData>()
     val saveFavoriteMovieEvent = SingleLiveEvent<Boolean>()
     val changeFavoriteIconColorEvent = SingleLiveEvent<Boolean>()
     val shareLinkEvent = SingleLiveEvent<String>()
@@ -58,7 +59,7 @@ class DetailMovieViewModel(
 
     private fun getMovieData() {
 
-        showMovieDataEvent.postValue(movieData)
+        showMovieData.value = movieData
 
         viewModelScope.launch(Dispatchers.IO) {
 
@@ -67,7 +68,7 @@ class DetailMovieViewModel(
                 isFavorite = movieRepository.findMovieById(movieData.id).isNotEmpty()
 
                 withContext(Dispatchers.Main) {
-                    changeFavoriteIconColorEvent.postValue(isFavorite)
+                    changeFavoriteIconColorEvent.value = isFavorite
                 }
 
             } catch (e: Exception) {
@@ -91,8 +92,8 @@ class DetailMovieViewModel(
                 }
 
                 withContext(Dispatchers.Main) {
-                    saveFavoriteMovieEvent.postValue(isFavorite)
-                    changeFavoriteIconColorEvent.postValue(isFavorite)
+                    saveFavoriteMovieEvent.value = isFavorite
+                    changeFavoriteIconColorEvent.value = isFavorite
                 }
 
             } catch (e: Exception) {
@@ -102,7 +103,7 @@ class DetailMovieViewModel(
     }
 
     fun shareIconClicked() {
-        shareLinkEvent.postValue(movieData.title)
+        shareLinkEvent.value = movieData.title
     }
 
     private fun mappingToEntity(movieData: MovieData): MovieEntity {

@@ -52,7 +52,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     private fun initObserver() {
 
-        detailMovieViewModel.showMovieDataEvent.observe(this, {
+        detailMovieViewModel.showMovieData.observe(this, {
             renderMovieData(it)
         })
 

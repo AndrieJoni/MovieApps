@@ -21,7 +21,4 @@ object MovieModule {
     @Provides
     fun providesFavoriteRepository(movieDbService: MovieDbService, movieDatabase: MovieDatabase) =
         MovieRepository(movieDbService, movieDatabase)
-
-    @Provides
-    fun providesFavoriteMovieData() = MovieData()
 }

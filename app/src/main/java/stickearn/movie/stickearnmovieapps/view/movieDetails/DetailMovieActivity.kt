@@ -31,6 +31,7 @@ class DetailMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        detailMovieViewModel.setMovie(intent.getParcelableExtra(MOVIE_DATA) as MovieData)
         setContentView(R.layout.activity_detail_movie)
         initView()
         initObserver()

@@ -18,10 +18,10 @@ import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieDataSourceFactory
 
 class DetailMovieViewModel @ViewModelInject constructor(
-    private val movieData: MovieData,
     private val movieRepository: MovieRepository
 ) : ViewModel() {
 
+    private var movieData: MovieData? = null
     val showMovieData = MutableLiveData<MovieData>()
     val saveFavoriteMovieEvent = SingleLiveEvent<Boolean>()
     val changeFavoriteIconColorEvent = SingleLiveEvent<Boolean>()
@@ -31,7 +31,8 @@ class DetailMovieViewModel @ViewModelInject constructor(
 
     var reviewsMovieDataSourceFactory: ReviewsMovieDataSourceFactory? = null
 
-    init {
+    fun setMovie(movie : MovieData) {
+        this.movieData = movie
         getMovieData()
     }
 
@@ -47,7 +48,7 @@ class DetailMovieViewModel @ViewModelInject constructor(
     fun initializeReviewsMovieLiveData(): LiveData<PagedList<MovieReviewData>> {
 
         reviewsMovieDataSourceFactory = ReviewsMovieDataSourceFactory(
-            movieData.id.toString(),
+            movieData?.id.toString(),
             movieRepository,
             viewModelScope
         )
@@ -66,7 +67,7 @@ class DetailMovieViewModel @ViewModelInject constructor(
 
             try {
 
-                isFavorite = movieRepository.findMovieById(movieData.id).isNotEmpty()
+                isFavorite = movieRepository.findMovieById(movieData?.id!!).isNotEmpty()
 
                 withContext(Dispatchers.Main) {
                     changeFavoriteIconColorEvent.value = isFavorite
@@ -86,10 +87,10 @@ class DetailMovieViewModel @ViewModelInject constructor(
 
                 if (!isFavorite) {
                     isFavorite = true
-                    movieRepository.insertMovies(mappingToEntity(movieData))
+                    movieRepository.insertMovies(mappingToEntity(movieData!!))
                 } else {
                     isFavorite = false
-                    movieRepository.deleteMovies(mappingToEntity(movieData))
+                    movieRepository.deleteMovies(mappingToEntity(movieData!!))
                 }
 
                 withContext(Dispatchers.Main) {
@@ -104,7 +105,7 @@ class DetailMovieViewModel @ViewModelInject constructor(
     }
 
     fun shareIconClicked() {
-        shareLinkEvent.value = movieData.title
+        shareLinkEvent.value = movieData?.title.toString()
     }
 
     private fun mappingToEntity(movieData: MovieData): MovieEntity {

@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
-class HiltNetworkModule {
+object HiltNetworkModule {
 
     @Provides
     @Singleton

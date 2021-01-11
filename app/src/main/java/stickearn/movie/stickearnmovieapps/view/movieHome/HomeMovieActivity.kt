@@ -4,15 +4,16 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_home_movie.*
 import kotlinx.android.synthetic.main.layout_home_now_playing_movies.*
 import kotlinx.android.synthetic.main.layout_home_popular_movies.*
 import kotlinx.android.synthetic.main.layout_home_top_rated_movies.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.view.PaginationStatus
@@ -20,9 +21,10 @@ import stickearn.movie.stickearnmovieapps.view.movieDetails.DetailMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieFavorite.FavoriteMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesAdapter
 
+@AndroidEntryPoint
 class HomeMovieActivity : AppCompatActivity() {
 
-    private val homeMovieViewModel: HomeMovieViewModel by viewModel()
+    private val homeMovieViewModel: HomeMovieViewModel by viewModels()
 
     private var popularMoviesAdapter = PopularMoviesAdapter()
     private var topRatedMoviesAdapter = MoviesAdapter()

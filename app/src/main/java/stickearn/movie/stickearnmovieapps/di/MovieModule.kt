@@ -1,25 +1,27 @@
 package stickearn.movie.stickearnmovieapps.di
 
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import retrofit2.Retrofit
 import stickearn.movie.stickearnmovieapps.data.MovieData
+import stickearn.movie.stickearnmovieapps.database.MovieDatabase
 import stickearn.movie.stickearnmovieapps.network.MovieDbService
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import stickearn.movie.stickearnmovieapps.view.movieDetails.DetailMovieViewModel
-import stickearn.movie.stickearnmovieapps.view.movieFavorite.FavoriteMovieViewModel
-import stickearn.movie.stickearnmovieapps.view.movieHome.HomeMovieViewModel
 
-val movieModule = module {
+@Module
+@InstallIn(ActivityComponent::class)
+object MovieModule {
 
-    factory {
-        MovieRepository(
-            get<Retrofit>().create(MovieDbService::class.java),
-            get()
-        )
-    }
+    @Provides
+    fun providesMovieService(retrofit: Retrofit): MovieDbService =
+        retrofit.create(MovieDbService::class.java)
 
-    viewModel { HomeMovieViewModel(get()) }
-    viewModel { (movieData: MovieData) -> DetailMovieViewModel(movieData, get()) }
-    viewModel { FavoriteMovieViewModel(get()) }
+    @Provides
+    fun providesFavoriteRepository(movieDbService: MovieDbService, movieDatabase: MovieDatabase) =
+        MovieRepository(movieDbService, movieDatabase)
+
+    @Provides
+    fun providesFavoriteMovieData() = MovieData()
 }

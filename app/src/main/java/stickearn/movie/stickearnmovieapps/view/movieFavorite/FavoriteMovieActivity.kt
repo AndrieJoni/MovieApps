@@ -1,20 +1,20 @@
 package stickearn.movie.stickearnmovieapps.view.movieFavorite
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_favorite_movie.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.database.MovieEntity
 
 @AndroidEntryPoint
 class FavoriteMovieActivity : AppCompatActivity() {
 
-    private val favoriteMovieViewModel: FavoriteMovieViewModel by viewModel()
+    private val favoriteMovieViewModel: FavoriteMovieViewModel by viewModels()
 
     private var movieFavoriteAdapter = FavoriteMovieAdapter()
 

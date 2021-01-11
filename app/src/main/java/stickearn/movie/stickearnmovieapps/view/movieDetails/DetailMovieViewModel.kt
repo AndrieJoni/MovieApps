@@ -1,5 +1,6 @@
 package stickearn.movie.stickearnmovieapps.view.movieDetails
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +17,7 @@ import stickearn.movie.stickearnmovieapps.repository.MovieRepository
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieDataSourceFactory
 
-class DetailMovieViewModel(
+class DetailMovieViewModel @ViewModelInject constructor(
     private val movieData: MovieData,
     private val movieRepository: MovieRepository
 ) : ViewModel() {

@@ -2,6 +2,7 @@ package stickearn.movie.stickearnmovieapps.view.movieDetails
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -9,9 +10,8 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import stickearn.movie.stickearnmovieapps.BuildConfig
@@ -22,11 +22,10 @@ import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieAdapter
 
 
+@AndroidEntryPoint
 class DetailMovieActivity : AppCompatActivity() {
 
-    private val detailMovieViewModel: DetailMovieViewModel by viewModel {
-        parametersOf(intent.getParcelableExtra(MOVIE_DATA))
-    }
+    private val detailMovieViewModel: DetailMovieViewModel by viewModels()
 
     private var reviewsMovieAdapter = ReviewsMovieAdapter()
 

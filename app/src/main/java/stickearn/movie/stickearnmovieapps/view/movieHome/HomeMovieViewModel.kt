@@ -1,5 +1,6 @@
 package stickearn.movie.stickearnmovieapps.view.movieHome
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,8 @@ import stickearn.movie.stickearnmovieapps.view.movieHome.nowPlaying.NowPlayingMo
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesDataSourceFactory
 import stickearn.movie.stickearnmovieapps.view.movieHome.topRated.TopRatedMoviesDataSourceFactory
 
-class HomeMovieViewModel(private val movieRepository: MovieRepository) : ViewModel() {
+class HomeMovieViewModel @ViewModelInject constructor(private val movieRepository: MovieRepository) :
+    ViewModel() {
 
     val goToDetailMovieEvent = SingleLiveEvent<MovieData>()
     val goToFavoriteActivityEvent = SingleLiveEvent<Any>()

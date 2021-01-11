@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import stickearn.movie.stickearnmovieapps.database.MovieDatabase
 
 val databaseModule = module {
+
     single {
         Room.databaseBuilder(
             get(),

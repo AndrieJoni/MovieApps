@@ -1,10 +1,8 @@
-package stickearn.movie.stickearnmovieapps.view.movieDetails
+package stickearn.movie.stickearnmovieapps.view.movieDetails.presentation
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import kotlinx.coroutines.Dispatchers
@@ -12,13 +10,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.data.MovieReviewData
-import stickearn.movie.stickearnmovieapps.database.MovieEntity
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
-import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieDataSourceFactory
+import stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.reviews.ReviewsMovieDataSourceFactory
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
 
 class DetailMovieViewModel @ViewModelInject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var movieData: MovieData? = null
@@ -31,8 +30,8 @@ class DetailMovieViewModel @ViewModelInject constructor(
 
     var reviewsMovieDataSourceFactory: ReviewsMovieDataSourceFactory? = null
 
-    fun setMovie(movie : MovieData) {
-        this.movieData = movie
+    init {
+        movieData = savedStateHandle.get<MovieData>(DetailMovieActivity.MOVIE_DATA) as MovieData
         getMovieData()
     }
 
@@ -108,9 +107,9 @@ class DetailMovieViewModel @ViewModelInject constructor(
         shareLinkEvent.value = movieData?.title.toString()
     }
 
-    private fun mappingToEntity(movieData: MovieData): MovieEntity {
+    private fun mappingToEntity(movieData: MovieData): FavoriteMovieEntity {
 
-        return MovieEntity(
+        return FavoriteMovieEntity(
             movieData.id,
             movieData.title,
             movieData.releaseDate,

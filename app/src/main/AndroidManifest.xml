@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.movieDetails.DetailMovieActivity" />
-        <activity android:name=".view.movieFavorite.FavoriteMovieActivity" />
+        <activity android:name=".view.movieDetails.presentation.DetailMovieActivity" />
+        <activity android:name=".view.movieFavorite.presentation.FavoriteMovieActivity" />
 
     </application>
 

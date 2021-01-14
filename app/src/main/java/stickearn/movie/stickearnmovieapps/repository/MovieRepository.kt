@@ -1,7 +1,7 @@
 package stickearn.movie.stickearnmovieapps.repository
 
 import stickearn.movie.stickearnmovieapps.database.MovieDatabase
-import stickearn.movie.stickearnmovieapps.database.MovieEntity
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
 import stickearn.movie.stickearnmovieapps.network.MovieDbService
 
 class MovieRepository(
@@ -20,11 +20,11 @@ class MovieRepository(
 
     fun getFavoriteMovies() = movieDatabase.movieDao().getAllMovies()
 
-    suspend fun insertMovies(movieEntity: MovieEntity) =
-        movieDatabase.movieDao().insertMovie(movieEntity)
+    suspend fun insertMovies(favoriteMovieEntity: FavoriteMovieEntity) =
+        movieDatabase.movieDao().insertMovie(favoriteMovieEntity)
 
-    suspend fun deleteMovies(movieEntity: MovieEntity) =
-        movieDatabase.movieDao().deleteMovie(movieEntity)
+    suspend fun deleteMovies(favoriteMovieEntity: FavoriteMovieEntity) =
+        movieDatabase.movieDao().deleteMovie(favoriteMovieEntity)
 
     suspend fun findMovieById(id: Int) = movieDatabase.movieDao().findMovieById(id)
 }

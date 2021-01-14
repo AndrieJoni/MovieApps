@@ -1,14 +1,12 @@
-package stickearn.movie.stickearnmovieapps.view.movieFavorite
+package stickearn.movie.stickearnmovieapps.view.movieFavorite.presentation
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import stickearn.movie.stickearnmovieapps.database.MovieEntity
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
 
 class FavoriteMovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository
@@ -23,7 +21,7 @@ class FavoriteMovieViewModel @ViewModelInject constructor(
             .build()
     }
 
-    fun getFavoriteMoviesData(): LiveData<PagedList<MovieEntity>> {
+    fun getFavoriteMoviesData(): LiveData<PagedList<FavoriteMovieEntity>> {
         return LivePagedListBuilder(
             movieRepository.getFavoriteMovies(),
             initializePageConfig()

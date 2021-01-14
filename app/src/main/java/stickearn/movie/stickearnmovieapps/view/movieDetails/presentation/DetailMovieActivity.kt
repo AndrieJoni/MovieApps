@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.movieDetails
+package stickearn.movie.stickearnmovieapps.view.movieDetails.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.data.MovieReviewData
 import stickearn.movie.stickearnmovieapps.view.PaginationStatus
-import stickearn.movie.stickearnmovieapps.view.movieDetails.reviews.ReviewsMovieAdapter
+import stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.reviews.ReviewsMovieAdapter
 
 
 @AndroidEntryPoint
@@ -31,7 +31,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        detailMovieViewModel.setMovie(intent.getParcelableExtra(MOVIE_DATA) as MovieData)
         setContentView(R.layout.activity_detail_movie)
         initView()
         initObserver()

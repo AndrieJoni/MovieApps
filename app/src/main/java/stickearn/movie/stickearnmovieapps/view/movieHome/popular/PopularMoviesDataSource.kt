@@ -7,8 +7,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
+import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 
 class PopularMoviesDataSource(
     private val paginationStatus: SingleLiveEvent<PaginationStatus>,
@@ -24,20 +24,20 @@ class PopularMoviesDataSource(
         callback: LoadInitialCallback<Int, MovieData>
     ) {
 
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
 
             try {
 
-                val response = getPopularMovieData("1")
-
-                withContext(Dispatchers.Main) {
-
-                    if (response.listOfMovies.size == 0) {
-                        paginationStatus.postValue(PaginationStatus.Empty)
-                    } else {
-                        callback.onResult(response.listOfMovies, null, 2)
-                    }
+                val response = withContext(Dispatchers.IO) {
+                    getPopularMovieData("1")
                 }
+
+                if (response.listOfMovies.size == 0) {
+                    paginationStatus.postValue(PaginationStatus.Empty)
+                } else {
+                    callback.onResult(response.listOfMovies, null, 2)
+                }
+
 
             } catch (e: Exception) {
                 paginationStatus.postValue(PaginationStatus.Error)

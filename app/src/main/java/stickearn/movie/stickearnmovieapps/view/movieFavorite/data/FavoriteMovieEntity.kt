@@ -1,11 +1,11 @@
-package stickearn.movie.stickearnmovieapps.database
+package stickearn.movie.stickearnmovieapps.view.movieFavorite.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movie")
-data class MovieEntity(
+data class FavoriteMovieEntity(
     @PrimaryKey
     val id: Int,
     @ColumnInfo(name = "title") val title: String?,

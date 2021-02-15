@@ -1,22 +1,28 @@
 package stickearn.movie.stickearnmovieapps.view.movieHome
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import stickearn.movie.stickearnmovieapps.data.MovieData
-import stickearn.movie.stickearnmovieapps.repository.MovieRepository
+import com.movie.domain.usecase.GetNowPlayingMovieListUseCase
+import com.movie.domain.usecase.GetPopularMovieListUseCase
+import com.movie.domain.usecase.GetTopRatedMovieListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
 import stickearn.movie.stickearnmovieapps.view.movieHome.nowPlaying.NowPlayingMoviesDataSourceFactory
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesDataSourceFactory
 import stickearn.movie.stickearnmovieapps.view.movieHome.topRated.TopRatedMoviesDataSourceFactory
+import javax.inject.Inject
 
-class HomeMovieViewModel @ViewModelInject constructor(private val movieRepository: MovieRepository) :
-    ViewModel() {
+@HiltViewModel
+class HomeMovieViewModel @Inject constructor(
+    private val getPopularMovieListUseCase: GetPopularMovieListUseCase,
+    private val getTopRatedMovieListUseCase: GetTopRatedMovieListUseCase,
+    private val getNowPlayingMovieListUseCase: GetNowPlayingMovieListUseCase
+) : ViewModel() {
 
-    val goToDetailMovieEvent = SingleLiveEvent<MovieData>()
+    val goToDetailMovieEvent = SingleLiveEvent<MovieHomeModel>()
     val goToFavoriteActivityEvent = SingleLiveEvent<Any>()
 
     var popularMoviesDataSourceFactory: PopularMoviesDataSourceFactory? = null
@@ -32,10 +38,10 @@ class HomeMovieViewModel @ViewModelInject constructor(private val movieRepositor
             .build()
     }
 
-    fun initializePopularMoviesLiveData(): LiveData<PagedList<MovieData>> {
+    fun initializePopularMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
 
         popularMoviesDataSourceFactory = PopularMoviesDataSourceFactory(
-            movieRepository,
+            getPopularMovieListUseCase,
             viewModelScope
         )
 
@@ -45,10 +51,10 @@ class HomeMovieViewModel @ViewModelInject constructor(private val movieRepositor
         ).build()
     }
 
-    fun initializeTopRatedMoviesLiveData(): LiveData<PagedList<MovieData>> {
+    fun initializeTopRatedMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
 
         topRatedMoviesDataSourceFactory = TopRatedMoviesDataSourceFactory(
-            movieRepository,
+            getTopRatedMovieListUseCase,
             viewModelScope
         )
 
@@ -58,10 +64,10 @@ class HomeMovieViewModel @ViewModelInject constructor(private val movieRepositor
         ).build()
     }
 
-    fun initializeNowPlayingMoviesLiveData(): LiveData<PagedList<MovieData>> {
+    fun initializeNowPlayingMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
 
         nowPlayingMoviesDataSourceFactory = NowPlayingMoviesDataSourceFactory(
-            movieRepository,
+            getNowPlayingMovieListUseCase,
             viewModelScope
         )
 
@@ -71,7 +77,7 @@ class HomeMovieViewModel @ViewModelInject constructor(private val movieRepositor
         ).build()
     }
 
-    fun movieClicked(movieData: MovieData) {
+    fun movieClicked(movieData: MovieHomeModel) {
         goToDetailMovieEvent.postValue(movieData)
     }
 

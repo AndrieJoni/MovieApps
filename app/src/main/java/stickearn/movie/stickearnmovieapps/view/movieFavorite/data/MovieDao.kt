@@ -9,7 +9,6 @@ import androidx.room.Query
 @Dao
 interface MovieDao {
 
-
     @Query("SELECT id,title,release_date,overview,image FROM movie")
     fun getAllMovies(): DataSource.Factory<Int, FavoriteMovieEntity>
 

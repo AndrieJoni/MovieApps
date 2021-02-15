@@ -6,11 +6,11 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.adapter_popular_movies.view.*
 import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.data.MovieData
+import stickearn.movie.stickearnmovieapps.view.movieHome.MovieHomeModel
 
 class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun renderView(movieData: MovieData) {
+    fun renderView(movieData: MovieHomeModel) {
 
         Picasso
             .get()
@@ -18,7 +18,7 @@ class PopularMoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
                 String.format(
                     "%s/t/p/w500/%s",
                     BuildConfig.BASE_TMDB_IMAGE_URL,
-                    movieData.backdropPath
+                    movieData.backdropImage
                 )
             )
             .placeholder(R.drawable.ic_baseline_image_24)

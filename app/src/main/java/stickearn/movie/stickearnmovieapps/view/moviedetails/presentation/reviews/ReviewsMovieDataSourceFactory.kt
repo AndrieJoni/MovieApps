@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.reviews
+package stickearn.movie.stickearnmovieapps.view.moviedetails.presentation.reviews
 
 import androidx.paging.DataSource
 import kotlinx.coroutines.CoroutineScope

@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.reviews
+package stickearn.movie.stickearnmovieapps.view.moviedetails.presentation.reviews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

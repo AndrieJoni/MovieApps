@@ -1,28 +1,30 @@
 package stickearn.movie.stickearnmovieapps.view.movieHome.nowPlaying
 
 import androidx.paging.PageKeyedDataSource
+import com.movie.domain.usecase.GetNowPlayingMovieListUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import stickearn.movie.stickearnmovieapps.data.MovieData
-import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import stickearn.movie.stickearnmovieapps.view.PaginationStatus
 import stickearn.movie.stickearnmovieapps.utils.SingleLiveEvent
+import stickearn.movie.stickearnmovieapps.view.PaginationStatus
+import stickearn.movie.stickearnmovieapps.view.movieHome.MovieHomeModel
+import stickearn.movie.stickearnmovieapps.view.toMovieHomeModel
 
 class NowPlayingMoviesDataSource(
     private val paginationStatus: SingleLiveEvent<PaginationStatus>,
-    private val movieRepository: MovieRepository,
+    private val getNowPlayingMovieListUseCase: GetNowPlayingMovieListUseCase,
     private val scope: CoroutineScope
 
-) : PageKeyedDataSource<Int, MovieData>() {
+) : PageKeyedDataSource<Int, MovieHomeModel>() {
 
-    private suspend fun getNowPlayingMovieData(page: String) =
-        movieRepository.getNowPlayingMovies(page)
+    private suspend fun getNowPlayingMovieData(
+        page: String
+    ) = getNowPlayingMovieListUseCase.invoke(page)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, MovieData>
+        callback: LoadInitialCallback<Int, MovieHomeModel>
     ) {
 
         scope.launch(Dispatchers.IO) {
@@ -33,10 +35,10 @@ class NowPlayingMoviesDataSource(
 
                 withContext(Dispatchers.Main) {
 
-                    if (response.listOfMovies.size == 0) {
+                    if (response.isEmpty()) {
                         paginationStatus.postValue(PaginationStatus.Empty)
                     } else {
-                        callback.onResult(response.listOfMovies, null, 2)
+                        callback.onResult(response.map { it.toMovieHomeModel() }, null, 2)
                     }
 
                 }
@@ -49,7 +51,7 @@ class NowPlayingMoviesDataSource(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieData>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
 
         scope.launch(Dispatchers.IO) {
 
@@ -58,7 +60,7 @@ class NowPlayingMoviesDataSource(
                 val response = getNowPlayingMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
-                    callback.onResult(response.listOfMovies, params.key + 1)
+                    callback.onResult(response.map { it.toMovieHomeModel() }, params.key + 1)
                 }
 
             } catch (e: Exception) {
@@ -69,6 +71,6 @@ class NowPlayingMoviesDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieData>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
     }
 }

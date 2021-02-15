@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.movieDetails.presentation
+package stickearn.movie.stickearnmovieapps.view.moviedetails.presentation
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import stickearn.movie.stickearnmovieapps.R
 import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.data.MovieReviewData
 import stickearn.movie.stickearnmovieapps.view.PaginationStatus
-import stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.reviews.ReviewsMovieAdapter
+import stickearn.movie.stickearnmovieapps.view.moviedetails.presentation.reviews.ReviewsMovieAdapter
 
 
 @AndroidEntryPoint

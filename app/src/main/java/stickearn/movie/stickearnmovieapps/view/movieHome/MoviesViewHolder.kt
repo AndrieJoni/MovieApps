@@ -8,11 +8,10 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import stickearn.movie.stickearnmovieapps.BuildConfig
 import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.data.MovieData
 
 class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun renderView(movieData: MovieData) {
+    fun renderView(movieData: MovieHomeModel) {
 
         Picasso
             .get()
@@ -20,7 +19,7 @@ class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 String.format(
                     "%s/t/p/w500/%s",
                     BuildConfig.BASE_TMDB_IMAGE_URL,
-                    movieData.posterPath
+                    movieData.posterImage
                 )
             )
             .placeholder(R.drawable.ic_baseline_image_24)

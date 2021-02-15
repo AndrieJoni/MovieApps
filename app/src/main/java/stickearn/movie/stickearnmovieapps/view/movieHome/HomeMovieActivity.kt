@@ -15,11 +15,10 @@ import kotlinx.android.synthetic.main.layout_home_now_playing_movies.*
 import kotlinx.android.synthetic.main.layout_home_popular_movies.*
 import kotlinx.android.synthetic.main.layout_home_top_rated_movies.*
 import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.data.MovieData
 import stickearn.movie.stickearnmovieapps.view.PaginationStatus
-import stickearn.movie.stickearnmovieapps.view.movieDetails.presentation.DetailMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieFavorite.presentation.FavoriteMovieActivity
 import stickearn.movie.stickearnmovieapps.view.movieHome.popular.PopularMoviesAdapter
+import stickearn.movie.stickearnmovieapps.view.moviedetails.presentation.DetailMovieActivity
 
 @AndroidEntryPoint
 class HomeMovieActivity : AppCompatActivity() {
@@ -142,14 +141,14 @@ class HomeMovieActivity : AppCompatActivity() {
         homeMovieViewModel.favoriteIconClicked()
     }
 
-    private fun moviesClicked(movieData: MovieData) {
+    private fun moviesClicked(movieData: MovieHomeModel) {
         homeMovieViewModel.movieClicked(movieData)
     }
 
-    private fun goToDetailMovieEvent(movieData: MovieData) {
+    private fun goToDetailMovieEvent(movieData: MovieHomeModel) {
 
         val intent = Intent(this, DetailMovieActivity::class.java)
-        intent.putExtra(DetailMovieActivity.MOVIE_DATA, movieData)
+        //    intent.putExtra(DetailMovieActivity.MOVIE_DATA, movieData)
 
         startActivity(intent)
     }
@@ -185,7 +184,7 @@ class HomeMovieActivity : AppCompatActivity() {
         homeMovieViewModel.refreshNowPlayingMovie()
     }
 
-    private fun renderPopularMovieData(movieDatas: PagedList<MovieData>) {
+    private fun renderPopularMovieData(movieDatas: PagedList<MovieHomeModel>) {
 
         if (pbPopularMovies.isVisible) pbPopularMovies.isVisible = false
         if (!rvPopularMovies.isVisible) rvPopularMovies.isVisible = true
@@ -193,7 +192,7 @@ class HomeMovieActivity : AppCompatActivity() {
         popularMoviesAdapter.submitList(movieDatas)
     }
 
-    private fun renderTopRatedMovieData(movieDatas: PagedList<MovieData>) {
+    private fun renderTopRatedMovieData(movieDatas: PagedList<MovieHomeModel>) {
 
         if (pbTopRatedMovies.isVisible) pbTopRatedMovies.isVisible = false
         if (!rvTopRatedMovies.isVisible) rvTopRatedMovies.isVisible = true
@@ -201,7 +200,7 @@ class HomeMovieActivity : AppCompatActivity() {
         topRatedMoviesAdapter.submitList(movieDatas)
     }
 
-    private fun renderNowPlayingMovieData(movieDatas: PagedList<MovieData>) {
+    private fun renderNowPlayingMovieData(movieDatas: PagedList<MovieHomeModel>) {
 
         if (pbNowPlayingMovies.isVisible) pbNowPlayingMovies.isVisible = false
         if (!rvNowPlayingMovies.isVisible) rvNowPlayingMovies.isVisible = true

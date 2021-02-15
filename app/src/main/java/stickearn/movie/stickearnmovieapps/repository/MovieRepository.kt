@@ -1,10 +1,11 @@
 package stickearn.movie.stickearnmovieapps.repository
 
 import stickearn.movie.stickearnmovieapps.database.MovieDatabase
-import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
 import stickearn.movie.stickearnmovieapps.network.MovieDbService
+import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
+import javax.inject.Inject
 
-class MovieRepository(
+class MovieRepository @Inject constructor(
     private val movieDbService: MovieDbService,
     private val movieDatabase: MovieDatabase
 ) {

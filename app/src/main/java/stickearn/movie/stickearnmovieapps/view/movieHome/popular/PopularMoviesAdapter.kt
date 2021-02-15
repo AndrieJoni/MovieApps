@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_popular_movies.view.*
 import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.data.MovieData
+import stickearn.movie.stickearnmovieapps.view.movieHome.MovieHomeModel
 import stickearn.movie.stickearnmovieapps.view.movieHome.OnMovieListener
 
-class PopularMoviesAdapter : PagedListAdapter<MovieData, RecyclerView.ViewHolder>(
+class PopularMoviesAdapter : PagedListAdapter<MovieHomeModel, RecyclerView.ViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -34,13 +34,19 @@ class PopularMoviesAdapter : PagedListAdapter<MovieData, RecyclerView.ViewHolder
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieData>() {
-            override fun areItemsTheSame(oldItem: MovieData, newItem: MovieData): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieHomeModel>() {
+            override fun areItemsTheSame(
+                oldItem: MovieHomeModel,
+                newItem: MovieHomeModel
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MovieData, newItem: MovieData): Boolean {
-                return oldItem.popularity == newItem.popularity
+            override fun areContentsTheSame(
+                oldItem: MovieHomeModel,
+                newItem: MovieHomeModel
+            ): Boolean {
+                return oldItem.title == newItem.title
             }
         }
     }

@@ -1,6 +1,9 @@
 package com.example.commondata
 
+import com.example.commondata.response.movie.MovieListResponse
+import com.example.commondata.response.review.MoviesReviewResponse
 import com.movie.domain.entity.Movie
+import com.movie.domain.entity.MovieReview
 
 fun MovieListResponse.toMovieEntity(): List<Movie> {
 
@@ -20,6 +23,18 @@ fun MovieListResponse.toMovieEntity(): List<Movie> {
             voteCount = it.voteCount,
             isVideo = it.isVideo,
             voteAverage = it.voteAverage
+        )
+    }
+}
+
+fun MoviesReviewResponse.toReviewEntity(): List<MovieReview> {
+
+    return listOfMoviesReviews.map {
+        MovieReview(
+            id = it.id,
+            author = it.author,
+            content = it.content,
+            url = it.url
         )
     }
 }

@@ -2,7 +2,7 @@ package stickearn.movie.stickearnmovieapps.view.movieFavorite.data
 
 import stickearn.movie.stickearnmovieapps.view.movieFavorite.domain.FavoriteMovie
 
-fun Collection<FavoriteMovieEntity>.toFavoriteMovie(): List<FavoriteMovie> {
+fun Collection<com.example.basedata.local.FavoriteMovieEntity>.toFavoriteMovie(): List<FavoriteMovie> {
 
     return map {
         FavoriteMovie(

@@ -1,3 +1,7 @@
+include ':commonui'
+include ':util'
+include ':home'
+include ':basedata'
 include ':commondata'
 include ':domain'
 include ':app'

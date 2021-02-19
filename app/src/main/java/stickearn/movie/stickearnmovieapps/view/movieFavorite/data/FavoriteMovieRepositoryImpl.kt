@@ -1,4 +1,4 @@
 package stickearn.movie.stickearnmovieapps.view.movieFavorite.data
 
-class FavoriteMovieRepositoryImpl(val movieDao: MovieDao) {
+class FavoriteMovieRepositoryImpl(val movieDao: com.example.basedata.local.MovieDao) {
 }

@@ -1,20 +1,22 @@
 package stickearn.movie.stickearnmovieapps.view.movieFavorite.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_favorite_movie.*
-import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.view.movieFavorite.data.FavoriteMovieEntity
+import stickearn.movie.stickearnmovieapps.databinding.ActivityFavoriteMovieBinding
+import com.example.basedata.local.FavoriteMovieEntity
 
 @AndroidEntryPoint
 class FavoriteMovieActivity : AppCompatActivity() {
 
     private val favoriteMovieViewModel: FavoriteMovieViewModel by viewModels()
+
+    private lateinit var binding: ActivityFavoriteMovieBinding
 
     private var movieFavoriteAdapter = FavoriteMovieAdapter()
 
@@ -22,27 +24,33 @@ class FavoriteMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_favorite_movie)
+        setContentView(initBinding())
         initView()
         initObserver()
         initEventListener()
     }
 
+    private fun initBinding(): View {
+
+        binding = ActivityFavoriteMovieBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
     private fun initView() {
 
-        rvFavoriteMovie.addItemDecoration(
+        binding.rvFavoriteMovie.addItemDecoration(
             DividerItemDecoration(
                 this,
                 DividerItemDecoration.VERTICAL
             )
         )
 
-        rvFavoriteMovie.adapter = movieFavoriteAdapter
+        binding.rvFavoriteMovie.adapter = movieFavoriteAdapter
     }
 
     private fun initEventListener() {
 
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             finish()
         }
     }
@@ -54,12 +62,13 @@ class FavoriteMovieActivity : AppCompatActivity() {
         })
     }
 
-    private fun renderFavoriteMovieData(favoriteFavoriteMovieData: PagedList<FavoriteMovieEntity>) {
+    private fun renderFavoriteMovieData(favoriteFavoriteMovieData: PagedList<com.example.basedata.local.FavoriteMovieEntity>) {
 
-        if (pbFavoriteMovies.isVisible) pbFavoriteMovies.isVisible = false
+        if (binding.pbFavoriteMovies.isVisible)
+            binding.pbFavoriteMovies.isVisible = false
 
         if (isFirstTimeLoad && favoriteFavoriteMovieData.size == 0) {
-            tvNoFavoriteMovies.isVisible = true
+            binding.tvNoFavoriteMovies.isVisible = true
             isFirstTimeLoad = false
         }
 

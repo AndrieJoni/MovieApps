@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails
+package com.example.moviedetails.moviedetails
 
 import com.movie.domain.entity.MovieReview
 

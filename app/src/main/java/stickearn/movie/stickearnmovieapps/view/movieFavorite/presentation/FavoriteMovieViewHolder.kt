@@ -13,7 +13,7 @@ class FavoriteMovieViewHolder(
     adapterFavoriteMovieBinding.root
 ) {
 
-    fun renderView(favoriteMovieEntity: com.example.basedata.local.FavoriteMovieEntity) {
+    fun renderView(movieEntity: com.example.basedata.local.MovieEntity) {
 
         Picasso
             .get()
@@ -21,20 +21,20 @@ class FavoriteMovieViewHolder(
                 String.format(
                     "%s/t/p/w500/%s",
                     com.example.commondata.BuildConfig.BASE_TMDB_IMAGE_URL,
-                    favoriteMovieEntity.imageUrl
+                    movieEntity.imageUrl
                 )
             )
             .placeholder(R.drawable.ic_baseline_image_24)
             .fit()
             .into(adapterFavoriteMovieBinding.ivFavoriteMovie)
 
-        adapterFavoriteMovieBinding.tvMovieTitle.text = favoriteMovieEntity.title
+        adapterFavoriteMovieBinding.tvMovieTitle.text = movieEntity.title
 
         adapterFavoriteMovieBinding.tvMovieReleaseDate.text = LocalDate.parse(
-            favoriteMovieEntity.releaseDate,
+            movieEntity.releaseDate,
             DateTimeFormatter.ofPattern("yyyy-MM-dd")
         ).format(DateTimeFormatter.ofPattern("LLL dd,yyyy"))
 
-        adapterFavoriteMovieBinding.tvMovieDescription.text = favoriteMovieEntity.description
+        adapterFavoriteMovieBinding.tvMovieDescription.text = movieEntity.description
     }
 }

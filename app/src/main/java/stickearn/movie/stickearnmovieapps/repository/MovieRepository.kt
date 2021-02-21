@@ -1,6 +1,6 @@
 package stickearn.movie.stickearnmovieapps.repository
 
-import com.example.basedata.local.FavoriteMovieEntity
+import com.example.basedata.local.MovieEntity
 import com.example.basedata.local.MovieDatabase
 import javax.inject.Inject
 
@@ -10,11 +10,11 @@ class MovieRepository @Inject constructor(
 
     fun getFavoriteMovies() = movieDatabase.movieDao().getAllMovies()
 
-    suspend fun insertMovies(favoriteMovieEntity: FavoriteMovieEntity) =
-        movieDatabase.movieDao().insertMovie(favoriteMovieEntity)
+    suspend fun insertMovies(movieEntity: MovieEntity) =
+        movieDatabase.movieDao().insertMovie(movieEntity)
 
-    suspend fun deleteMovies(favoriteMovieEntity: FavoriteMovieEntity) =
-        movieDatabase.movieDao().deleteMovie(favoriteMovieEntity)
+    suspend fun deleteMovies(movieEntity: MovieEntity) =
+        movieDatabase.movieDao().deleteMovie(movieEntity)
 
     suspend fun findMovieById(id: Int) = movieDatabase.movieDao().findMovieById(id)
 }

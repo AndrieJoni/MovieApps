@@ -1,11 +1,11 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails.adapter
+package com.example.moviedetails.moviedetails.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import stickearn.movie.stickearnmovieapps.databinding.AdapterReviewMovieBinding
-import stickearn.movie.stickearnmovieapps.view.moviedetails.MovieReviewModel
+import com.example.moviedetails.databinding.AdapterReviewMovieBinding
+import com.example.moviedetails.moviedetails.MovieReviewModel
 
 class ReviewsMovieViewHolder(
-    val adapterReviewMovieBinding: AdapterReviewMovieBinding
+    private val adapterReviewMovieBinding: AdapterReviewMovieBinding
 ) : RecyclerView.ViewHolder(adapterReviewMovieBinding.root) {
 
     fun renderView(movieReviewData: MovieReviewModel) {

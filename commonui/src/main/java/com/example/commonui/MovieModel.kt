@@ -1,10 +1,10 @@
-package com.example.home
+package com.example.commonui
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MovieHomeModel(
+data class MovieModel(
     val id: Int,
     val title: String,
     val overview: String,
@@ -12,4 +12,3 @@ data class MovieHomeModel(
     val posterImage: String,
     val backdropImage: String
 ) : Parcelable
-

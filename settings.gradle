@@ -1,3 +1,5 @@
+include ':navigation'
+include ':moviedetails'
 include ':commonui'
 include ':util'
 include ':home'

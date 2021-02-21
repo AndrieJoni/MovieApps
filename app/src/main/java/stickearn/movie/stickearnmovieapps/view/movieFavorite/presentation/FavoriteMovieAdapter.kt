@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import stickearn.movie.stickearnmovieapps.databinding.AdapterFavoriteMovieBinding
-import com.example.basedata.local.FavoriteMovieEntity
 
-class FavoriteMovieAdapter : PagedListAdapter<com.example.basedata.local.FavoriteMovieEntity, FavoriteMovieViewHolder>(
+class FavoriteMovieAdapter : PagedListAdapter<com.example.basedata.local.MovieEntity, FavoriteMovieViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -26,17 +25,17 @@ class FavoriteMovieAdapter : PagedListAdapter<com.example.basedata.local.Favorit
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<com.example.basedata.local.FavoriteMovieEntity>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<com.example.basedata.local.MovieEntity>() {
             override fun areItemsTheSame(
-                oldItem: com.example.basedata.local.FavoriteMovieEntity,
-                newItem: com.example.basedata.local.FavoriteMovieEntity
+                oldItem: com.example.basedata.local.MovieEntity,
+                newItem: com.example.basedata.local.MovieEntity
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: com.example.basedata.local.FavoriteMovieEntity,
-                newItem: com.example.basedata.local.FavoriteMovieEntity
+                oldItem: com.example.basedata.local.MovieEntity,
+                newItem: com.example.basedata.local.MovieEntity
             ): Boolean {
                 return oldItem.description == newItem.description
             }

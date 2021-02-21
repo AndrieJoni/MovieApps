@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import com.example.basedata.local.FavoriteMovieEntity
 
 class FavoriteMovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository
@@ -21,7 +20,7 @@ class FavoriteMovieViewModel @ViewModelInject constructor(
             .build()
     }
 
-    fun getFavoriteMoviesData(): LiveData<PagedList<com.example.basedata.local.FavoriteMovieEntity>> {
+    fun getFavoriteMoviesData(): LiveData<PagedList<com.example.basedata.local.MovieEntity>> {
         return LivePagedListBuilder(
             movieRepository.getFavoriteMovies(),
             initializePageConfig()

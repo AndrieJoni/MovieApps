@@ -1,28 +1,32 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails
+package com.example.moviedetails.moviedetails
 
 import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.home.MovieHomeModel
+import com.example.commonui.MovieModel
+import com.example.commonui.toMovie
+import com.example.moviedetails.moviedetails.adapter.ReviewsMovieDataSourceFactory
+import com.example.navigation.Navigation
 import com.example.util.SingleLiveEvent
 import com.movie.domain.usecase.GetMovieReviewsUseCase
+import com.movie.domain.usecase.IsMovieMarkedAsFavoriteUseCase
+import com.movie.domain.usecase.MarkedMovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import stickearn.movie.stickearnmovieapps.repository.MovieRepository
-import stickearn.movie.stickearnmovieapps.view.moviedetails.adapter.ReviewsMovieDataSourceFactory
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailMovieViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val markedMovieUseCase: MarkedMovieUseCase,
+    private val isMovieMarkedAsFavoriteUseCase: IsMovieMarkedAsFavoriteUseCase,
     private val getMovieReviewsUseCase: GetMovieReviewsUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private var movieData: MovieHomeModel? = null
-    val showMovieData = MutableLiveData<MovieHomeModel>()
+    private var movieData: MovieModel? = null
+    val showMovieData = MutableLiveData<MovieModel>()
     val saveFavoriteMovieEvent = SingleLiveEvent<Boolean>()
     val changeFavoriteIconColorEvent = SingleLiveEvent<Boolean>()
     val shareLinkEvent = SingleLiveEvent<String>()
@@ -32,7 +36,7 @@ class DetailMovieViewModel @Inject constructor(
     var reviewsMovieDataSourceFactory: ReviewsMovieDataSourceFactory? = null
 
     init {
-        movieData = savedStateHandle.get<MovieHomeModel>(DetailMovieActivity.MOVIE_DATA)
+        movieData = savedStateHandle.get<MovieModel>(Navigation.MOVIE_DATA)
         getMovieData()
     }
 
@@ -67,7 +71,8 @@ class DetailMovieViewModel @Inject constructor(
 
             try {
 
-                isFavorite = movieRepository.findMovieById(movieData?.id!!).isNotEmpty()
+                if (movieData != null)
+                    isFavorite = isMovieMarkedAsFavoriteUseCase.invoke(movieData!!.toMovie())
 
                 withContext(Dispatchers.Main) {
                     changeFavoriteIconColorEvent.value = isFavorite
@@ -87,13 +92,7 @@ class DetailMovieViewModel @Inject constructor(
 
                 if (movieData != null) {
 
-                    if (!isFavorite) {
-                        isFavorite = true
-                        movieRepository.insertMovies(mappingToEntity(movieData!!))
-                    } else {
-                        isFavorite = false
-                        movieRepository.deleteMovies(mappingToEntity(movieData!!))
-                    }
+                    isFavorite = markedMovieUseCase.invoke(movieData!!.toMovie())
 
                     withContext(Dispatchers.Main) {
                         saveFavoriteMovieEvent.value = isFavorite
@@ -109,16 +108,5 @@ class DetailMovieViewModel @Inject constructor(
 
     fun shareIconClicked() {
         shareLinkEvent.value = movieData?.title.toString()
-    }
-
-    private fun mappingToEntity(movieData: MovieHomeModel): com.example.basedata.local.FavoriteMovieEntity {
-
-        return com.example.basedata.local.FavoriteMovieEntity(
-            movieData.id,
-            movieData.title,
-            movieData.releaseDate,
-            movieData.overview,
-            movieData.posterImage
-        )
     }
 }

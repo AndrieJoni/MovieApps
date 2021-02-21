@@ -1,11 +1,11 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails.adapter
+package com.example.moviedetails.moviedetails.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import stickearn.movie.stickearnmovieapps.databinding.AdapterReviewMovieBinding
-import stickearn.movie.stickearnmovieapps.view.moviedetails.MovieReviewModel
+import com.example.moviedetails.databinding.AdapterReviewMovieBinding
+import com.example.moviedetails.moviedetails.MovieReviewModel
 
 class ReviewsMovieAdapter : PagedListAdapter<MovieReviewModel, ReviewsMovieViewHolder>(
     DIFF_CALLBACK

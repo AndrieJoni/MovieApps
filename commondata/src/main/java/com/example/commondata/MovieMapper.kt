@@ -1,5 +1,6 @@
 package com.example.commondata
 
+import com.example.basedata.local.MovieEntity
 import com.example.commondata.response.movie.MovieListResponse
 import com.example.commondata.response.review.MoviesReviewResponse
 import com.movie.domain.entity.Movie
@@ -38,3 +39,26 @@ fun MoviesReviewResponse.toReviewEntity(): List<MovieReview> {
         )
     }
 }
+
+fun Movie.toMovieEntity(): MovieEntity {
+
+    return MovieEntity(
+        id = id,
+        title = title,
+        releaseDate = releaseDate,
+        description = overview,
+        imageUrl = posterPath
+    )
+}
+
+fun MovieEntity.toMovie(): Movie {
+
+    return Movie(
+        id = id,
+        title = title.toString(),
+        releaseDate = releaseDate,
+        overview = description.toString(),
+        posterPath = imageUrl.toString()
+    )
+}
+

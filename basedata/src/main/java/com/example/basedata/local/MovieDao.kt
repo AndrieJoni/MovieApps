@@ -10,14 +10,14 @@ import androidx.room.Query
 interface MovieDao {
 
     @Query("SELECT id,title,release_date,overview,image FROM movie")
-    fun getAllMovies(): DataSource.Factory<Int, FavoriteMovieEntity>
+    fun getAllMovies(): DataSource.Factory<Int, MovieEntity>
 
     @Query("SELECT * FROM movie WHERE id == :id")
-    suspend fun findMovieById(id: Int): List<FavoriteMovieEntity>
+    suspend fun findMovieById(id: Int): List<MovieEntity>
 
     @Insert
-    suspend fun insertMovie(favoriteMovieEntity: FavoriteMovieEntity)
+    suspend fun insertMovie(movieEntity: MovieEntity): Long
 
     @Delete
-    suspend fun deleteMovie(favoriteMovieEntity: FavoriteMovieEntity)
+    suspend fun deleteMovie(movieEntity: MovieEntity)
 }

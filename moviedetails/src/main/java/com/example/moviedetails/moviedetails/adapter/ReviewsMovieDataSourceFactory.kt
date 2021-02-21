@@ -1,11 +1,11 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails.adapter
+package com.example.moviedetails.moviedetails.adapter
 
 import androidx.paging.DataSource
 import com.example.util.PaginationStatus
 import com.example.util.SingleLiveEvent
 import com.movie.domain.usecase.GetMovieReviewsUseCase
 import kotlinx.coroutines.CoroutineScope
-import stickearn.movie.stickearnmovieapps.view.moviedetails.MovieReviewModel
+import com.example.moviedetails.moviedetails.MovieReviewModel
 
 class ReviewsMovieDataSourceFactory(
     private val id: String,

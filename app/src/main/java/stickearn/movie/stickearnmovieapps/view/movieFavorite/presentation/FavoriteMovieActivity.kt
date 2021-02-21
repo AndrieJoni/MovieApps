@@ -9,7 +9,6 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import stickearn.movie.stickearnmovieapps.databinding.ActivityFavoriteMovieBinding
-import com.example.basedata.local.FavoriteMovieEntity
 
 @AndroidEntryPoint
 class FavoriteMovieActivity : AppCompatActivity() {
@@ -62,16 +61,16 @@ class FavoriteMovieActivity : AppCompatActivity() {
         })
     }
 
-    private fun renderFavoriteMovieData(favoriteFavoriteMovieData: PagedList<com.example.basedata.local.FavoriteMovieEntity>) {
+    private fun renderFavoriteMovieData(favoriteMovieData: PagedList<com.example.basedata.local.MovieEntity>) {
 
         if (binding.pbFavoriteMovies.isVisible)
             binding.pbFavoriteMovies.isVisible = false
 
-        if (isFirstTimeLoad && favoriteFavoriteMovieData.size == 0) {
+        if (isFirstTimeLoad && favoriteMovieData.size == 0) {
             binding.tvNoFavoriteMovies.isVisible = true
             isFirstTimeLoad = false
         }
 
-        movieFavoriteAdapter.submitList(favoriteFavoriteMovieData)
+        movieFavoriteAdapter.submitList(favoriteMovieData)
     }
 }

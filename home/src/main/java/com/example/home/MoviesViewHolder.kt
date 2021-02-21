@@ -2,6 +2,7 @@ package com.example.home
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.commondata.BuildConfig
+import com.example.commonui.MovieModel
 import com.example.home.databinding.AdapterMoviesBinding
 import com.squareup.picasso.Picasso
 import org.threeten.bp.LocalDate
@@ -11,10 +12,9 @@ class MoviesViewHolder(
     val adapterMoviesBinding: AdapterMoviesBinding
 ) : RecyclerView.ViewHolder(adapterMoviesBinding.root) {
 
-    fun renderView(movieData: MovieHomeModel) {
+    fun renderView(movieData: MovieModel) {
 
-        Picasso
-            .get()
+        Picasso.Builder(itemView.context).build()
             .load(
                 String.format(
                     "%s/t/p/w500/%s",

@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.example.commonui.MovieModel
 import com.example.home.databinding.AdapterMoviesBinding
 
-class MoviesAdapter : PagedListAdapter<MovieHomeModel, MoviesViewHolder>(
+class MoviesAdapter : PagedListAdapter<MovieModel, MoviesViewHolder>(
     DIFF_CALLBACK
 ) {
 
@@ -31,17 +32,17 @@ class MoviesAdapter : PagedListAdapter<MovieHomeModel, MoviesViewHolder>(
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieHomeModel>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieModel>() {
             override fun areItemsTheSame(
-                oldItem: MovieHomeModel,
-                newItem: MovieHomeModel
+                oldItem: MovieModel,
+                newItem: MovieModel
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: MovieHomeModel,
-                newItem: MovieHomeModel
+                oldItem: MovieModel,
+                newItem: MovieModel
             ): Boolean {
                 return oldItem.title == newItem.title
             }

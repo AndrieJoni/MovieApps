@@ -1,8 +1,8 @@
 package com.example.home.popular
 
 import androidx.paging.PageKeyedDataSource
-import com.example.home.MovieHomeModel
-import com.example.home.toMovieHomeModel
+import com.example.commonui.MovieModel
+import com.example.commonui.toMovieModel
 import com.example.util.PaginationStatus
 import com.example.util.SingleLiveEvent
 import com.movie.domain.usecase.GetPopularMovieListUseCase
@@ -16,14 +16,14 @@ class PopularMoviesDataSource(
     private val getPopularMovieListUseCase: GetPopularMovieListUseCase,
     private val scope: CoroutineScope
 
-) : PageKeyedDataSource<Int, MovieHomeModel>() {
+) : PageKeyedDataSource<Int, MovieModel>() {
 
     private suspend fun getPopularMovieData(page: String) =
         getPopularMovieListUseCase.invoke(page)
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, MovieHomeModel>
+        callback: LoadInitialCallback<Int, MovieModel>
     ) {
 
         scope.launch {
@@ -37,7 +37,7 @@ class PopularMoviesDataSource(
                 if (response.isEmpty()) {
                     paginationStatus.postValue(PaginationStatus.Empty)
                 } else {
-                    callback.onResult(response.map { it.toMovieHomeModel() }, null, 2)
+                    callback.onResult(response.map { it.toMovieModel() }, null, 2)
                 }
 
 
@@ -49,7 +49,7 @@ class PopularMoviesDataSource(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
         scope.launch(Dispatchers.IO) {
 
@@ -58,7 +58,7 @@ class PopularMoviesDataSource(
                 val response = getPopularMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
-                    callback.onResult(response.map { it.toMovieHomeModel() }, params.key + 1)
+                    callback.onResult(response.map { it.toMovieModel() }, params.key + 1)
                 }
 
             } catch (e: Exception) {
@@ -69,6 +69,6 @@ class PopularMoviesDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
     }
 }

@@ -8,11 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import com.example.commonui.MovieModel
 import com.example.home.databinding.ActivityHomeMovieBinding
 import com.example.home.databinding.LayoutHomeNowPlayingMoviesBinding
 import com.example.home.databinding.LayoutHomePopularMoviesBinding
 import com.example.home.databinding.LayoutHomeTopRatedMoviesBinding
 import com.example.home.popular.PopularMoviesAdapter
+import com.example.navigation.Navigation
 import com.example.util.PaginationStatus
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -151,16 +153,16 @@ class HomeMovieActivity : AppCompatActivity() {
         homeMovieViewModel.favoriteIconClicked()
     }
 
-    private fun moviesClicked(movieData: MovieHomeModel) {
+    private fun moviesClicked(movieData: MovieModel) {
         homeMovieViewModel.movieClicked(movieData)
     }
 
-    private fun goToDetailMovieEvent(movieData: MovieHomeModel) {
+    private fun goToDetailMovieEvent(movieData: MovieModel) {
 
-        /*   val intent = Intent(this, DetailMovieActivity::class.java)
-           intent.putExtra(DetailMovieActivity.MOVIE_DATA, movieData)
-   */
-        startActivity(intent)
+        val data = Bundle()
+        data.putParcelable(Navigation.MOVIE_DATA, movieData)
+
+        startActivity(Navigation.openMovieDetails(this, data))
     }
 
     private fun goToFavoriteMovieEvent() {
@@ -194,7 +196,7 @@ class HomeMovieActivity : AppCompatActivity() {
         homeMovieViewModel.refreshNowPlayingMovie()
     }
 
-    private fun renderPopularMovieData(movieDatas: PagedList<MovieHomeModel>) {
+    private fun renderPopularMovieData(movieData: PagedList<MovieModel>) {
 
         if (bindingPopularMovie.pbPopularMovies.isVisible)
             bindingPopularMovie.pbPopularMovies.isVisible = false
@@ -202,10 +204,10 @@ class HomeMovieActivity : AppCompatActivity() {
         if (bindingPopularMovie.rvPopularMovies.isVisible.not())
             bindingPopularMovie.rvPopularMovies.isVisible = true
 
-        popularMoviesAdapter.submitList(movieDatas)
+        popularMoviesAdapter.submitList(movieData)
     }
 
-    private fun renderTopRatedMovieData(movieDatas: PagedList<MovieHomeModel>) {
+    private fun renderTopRatedMovieData(movieData: PagedList<MovieModel>) {
 
         if (bindingTopRatedMovie.pbTopRatedMovies.isVisible)
             bindingTopRatedMovie.pbTopRatedMovies.isVisible = false
@@ -213,10 +215,10 @@ class HomeMovieActivity : AppCompatActivity() {
         if (bindingTopRatedMovie.rvTopRatedMovies.isVisible.not())
             bindingTopRatedMovie.rvTopRatedMovies.isVisible = true
 
-        topRatedMoviesAdapter.submitList(movieDatas)
+        topRatedMoviesAdapter.submitList(movieData)
     }
 
-    private fun renderNowPlayingMovieData(movieDatas: PagedList<MovieHomeModel>) {
+    private fun renderNowPlayingMovieData(movieData: PagedList<MovieModel>) {
 
         if (bindingNowPlayingMovie.pbNowPlayingMovies.isVisible)
             bindingNowPlayingMovie.pbNowPlayingMovies.isVisible = false
@@ -224,7 +226,7 @@ class HomeMovieActivity : AppCompatActivity() {
         if (!bindingNowPlayingMovie.rvNowPlayingMovies.isVisible.not())
             bindingNowPlayingMovie.rvNowPlayingMovies.isVisible = true
 
-        nowPlayingMoviesAdapter.submitList(movieDatas)
+        nowPlayingMoviesAdapter.submitList(movieData)
     }
 
     private fun checkPopularMoviesPaginationStatus(paginationStatus: PaginationStatus) {

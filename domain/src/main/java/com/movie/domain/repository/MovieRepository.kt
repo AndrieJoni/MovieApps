@@ -5,6 +5,12 @@ import com.movie.domain.entity.MovieReview
 
 interface MovieRepository {
 
+    suspend fun getMovieByIdFromLocal(movieId: Int): List<Movie>
+
+    suspend fun insertMovieToLocal(movie: Movie): Long
+
+    suspend fun deleteMovieFromLocal(movie: Movie): Boolean
+
     suspend fun getTopRatedMovieList(page: String): List<Movie>
 
     suspend fun getNowPlayingMovieList(page: String): List<Movie>

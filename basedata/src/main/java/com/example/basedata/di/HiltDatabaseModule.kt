@@ -2,6 +2,7 @@ package com.example.basedata.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.basedata.local.MovieDao
 import com.example.basedata.local.MovieDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,4 +22,7 @@ object HiltDatabaseModule {
         MovieDatabase::class.java,
         "MovieDatabase"
     ).build()
+
+    @Provides
+    fun provideMovieDao(movieDatabase: MovieDatabase): MovieDao = movieDatabase.movieDao()
 }

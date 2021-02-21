@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.commonui.MovieModel
 import com.example.home.nowPlaying.NowPlayingMoviesDataSourceFactory
 import com.example.home.popular.PopularMoviesDataSourceFactory
 import com.example.home.topRated.TopRatedMoviesDataSourceFactory
@@ -22,7 +23,7 @@ class HomeMovieViewModel @Inject constructor(
     private val getNowPlayingMovieListUseCase: GetNowPlayingMovieListUseCase
 ) : ViewModel() {
 
-    val goToDetailMovieEvent = SingleLiveEvent<MovieHomeModel>()
+    val goToDetailMovieEvent = SingleLiveEvent<MovieModel>()
     val goToFavoriteActivityEvent = SingleLiveEvent<Any>()
 
     var popularMoviesDataSourceFactory: PopularMoviesDataSourceFactory? = null
@@ -38,7 +39,7 @@ class HomeMovieViewModel @Inject constructor(
             .build()
     }
 
-    fun initializePopularMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
+    fun initializePopularMoviesLiveData(): LiveData<PagedList<MovieModel>> {
 
         popularMoviesDataSourceFactory = PopularMoviesDataSourceFactory(
             getPopularMovieListUseCase,
@@ -51,7 +52,7 @@ class HomeMovieViewModel @Inject constructor(
         ).build()
     }
 
-    fun initializeTopRatedMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
+    fun initializeTopRatedMoviesLiveData(): LiveData<PagedList<MovieModel>> {
 
         topRatedMoviesDataSourceFactory = TopRatedMoviesDataSourceFactory(
             getTopRatedMovieListUseCase,
@@ -64,7 +65,7 @@ class HomeMovieViewModel @Inject constructor(
         ).build()
     }
 
-    fun initializeNowPlayingMoviesLiveData(): LiveData<PagedList<MovieHomeModel>> {
+    fun initializeNowPlayingMoviesLiveData(): LiveData<PagedList<MovieModel>> {
 
         nowPlayingMoviesDataSourceFactory = NowPlayingMoviesDataSourceFactory(
             getNowPlayingMovieListUseCase,
@@ -77,7 +78,7 @@ class HomeMovieViewModel @Inject constructor(
         ).build()
     }
 
-    fun movieClicked(movieData: MovieHomeModel) {
+    fun movieClicked(movieData: MovieModel) {
         goToDetailMovieEvent.postValue(movieData)
     }
 

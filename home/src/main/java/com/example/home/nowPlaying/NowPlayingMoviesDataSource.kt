@@ -1,8 +1,8 @@
 package com.example.home.nowPlaying
 
 import androidx.paging.PageKeyedDataSource
-import com.example.home.MovieHomeModel
-import com.example.home.toMovieHomeModel
+import com.example.commonui.MovieModel
+import com.example.commonui.toMovieModel
 import com.example.util.PaginationStatus
 import com.example.util.SingleLiveEvent
 import com.movie.domain.usecase.GetNowPlayingMovieListUseCase
@@ -16,7 +16,7 @@ class NowPlayingMoviesDataSource(
     private val getNowPlayingMovieListUseCase: GetNowPlayingMovieListUseCase,
     private val scope: CoroutineScope
 
-) : PageKeyedDataSource<Int, MovieHomeModel>() {
+) : PageKeyedDataSource<Int, MovieModel>() {
 
     private suspend fun getNowPlayingMovieData(
         page: String
@@ -24,7 +24,7 @@ class NowPlayingMoviesDataSource(
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, MovieHomeModel>
+        callback: LoadInitialCallback<Int, MovieModel>
     ) {
 
         scope.launch(Dispatchers.IO) {
@@ -38,7 +38,7 @@ class NowPlayingMoviesDataSource(
                     if (response.isEmpty()) {
                         paginationStatus.postValue(PaginationStatus.Empty)
                     } else {
-                        callback.onResult(response.map { it.toMovieHomeModel() }, null, 2)
+                        callback.onResult(response.map { it.toMovieModel() }, null, 2)
                     }
 
                 }
@@ -51,7 +51,7 @@ class NowPlayingMoviesDataSource(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
         scope.launch(Dispatchers.IO) {
 
@@ -60,7 +60,7 @@ class NowPlayingMoviesDataSource(
                 val response = getNowPlayingMovieData(params.key.toString())
 
                 withContext(Dispatchers.Main) {
-                    callback.onResult(response.map { it.toMovieHomeModel() }, params.key + 1)
+                    callback.onResult(response.map { it.toMovieModel() }, params.key + 1)
                 }
 
             } catch (e: Exception) {
@@ -71,6 +71,6 @@ class NowPlayingMoviesDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieHomeModel>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
     }
 }

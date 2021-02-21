@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails
+package com.example.moviedetails.moviedetails
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,16 +9,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.example.home.MovieHomeModel
+import com.example.commonui.MovieModel
+import com.example.moviedetails.R
+import com.example.moviedetails.databinding.ActivityDetailMovieBinding
+import com.example.moviedetails.moviedetails.adapter.ReviewsMovieAdapter
 import com.example.util.PaginationStatus
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.databinding.ActivityDetailMovieBinding
-import stickearn.movie.stickearnmovieapps.view.moviedetails.adapter.ReviewsMovieAdapter
 
 
 @AndroidEntryPoint
@@ -106,7 +106,7 @@ class DetailMovieActivity : AppCompatActivity() {
         detailMovieViewModel.shareIconClicked()
     }
 
-    private fun renderMovieData(movieData: MovieHomeModel) {
+    private fun renderMovieData(movieData: MovieModel) {
 
         binding.cToolbarDetailMovie.title = movieData.title
 
@@ -185,9 +185,5 @@ class DetailMovieActivity : AppCompatActivity() {
             else -> {
             }
         }
-    }
-
-    companion object {
-        const val MOVIE_DATA = "MovieData"
     }
 }

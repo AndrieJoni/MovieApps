@@ -1,4 +1,4 @@
-package stickearn.movie.stickearnmovieapps.view.moviedetails.adapter
+package com.example.moviedetails.moviedetails.adapter
 
 import androidx.paging.PageKeyedDataSource
 import com.example.util.PaginationStatus
@@ -8,8 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import stickearn.movie.stickearnmovieapps.view.moviedetails.MovieReviewModel
-import stickearn.movie.stickearnmovieapps.view.moviedetails.toMovieReviewModel
+import com.example.moviedetails.moviedetails.MovieReviewModel
+import com.example.moviedetails.moviedetails.toMovieReviewModel
 
 class ReviewsMovieDataSource(
     private val id: String,

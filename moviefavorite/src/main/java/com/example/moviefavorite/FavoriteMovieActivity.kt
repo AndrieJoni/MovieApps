@@ -1,14 +1,17 @@
-package stickearn.movie.stickearnmovieapps.view.movieFavorite.presentation
+package com.example.moviefavorite
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.commonui.MovieModel
+import com.example.moviefavorite.databinding.ActivityFavoriteMovieBinding
+import com.example.util.PaginationStatus
 import dagger.hilt.android.AndroidEntryPoint
-import stickearn.movie.stickearnmovieapps.databinding.ActivityFavoriteMovieBinding
 
 @AndroidEntryPoint
 class FavoriteMovieActivity : AppCompatActivity() {
@@ -18,8 +21,6 @@ class FavoriteMovieActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteMovieBinding
 
     private var movieFavoriteAdapter = FavoriteMovieAdapter()
-
-    private var isFirstTimeLoad = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,17 +60,28 @@ class FavoriteMovieActivity : AppCompatActivity() {
         favoriteMovieViewModel.getFavoriteMoviesData().observe(this, {
             renderFavoriteMovieData(it)
         })
+
+        favoriteMovieViewModel.favoriteMovieDataSourceFactory?.paginationStatus
+            ?.observe(this,
+                {
+
+                    when (it) {
+
+                        is PaginationStatus.Empty -> {
+                            binding.pbFavoriteMovies.isVisible = false
+                            binding.tvNoFavoriteMovies.isVisible = true
+                        }
+
+                        else -> {
+                        }
+                    }
+                })
     }
 
-    private fun renderFavoriteMovieData(favoriteMovieData: PagedList<com.example.basedata.local.MovieEntity>) {
+    private fun renderFavoriteMovieData(favoriteMovieData: PagedList<MovieModel>) {
 
-        if (binding.pbFavoriteMovies.isVisible)
-            binding.pbFavoriteMovies.isVisible = false
-
-        if (isFirstTimeLoad && favoriteMovieData.size == 0) {
-            binding.tvNoFavoriteMovies.isVisible = true
-            isFirstTimeLoad = false
-        }
+        binding.pbFavoriteMovies.isVisible = false
+        binding.tvNoFavoriteMovies.isVisible = false
 
         movieFavoriteAdapter.submitList(favoriteMovieData)
     }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_favorite_movies">You dont have favorite movie</string>
+    <string name="activity_favorite_movie_name">Favorite Movies</string>
+</resources>

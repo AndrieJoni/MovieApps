@@ -2,9 +2,10 @@ package com.example.basedata.local
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "movie")
+@Entity(tableName = "movie", indices = [Index(value = arrayOf("id"), unique = true)])
 data class MovieEntity(
     @PrimaryKey
     val id: Int,

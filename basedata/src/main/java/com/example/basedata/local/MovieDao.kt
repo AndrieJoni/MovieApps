@@ -1,6 +1,5 @@
 package com.example.basedata.local
 
-import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,8 +8,11 @@ import androidx.room.Query
 @Dao
 interface MovieDao {
 
-    @Query("SELECT id,title,release_date,overview,image FROM movie")
-    fun getAllMovies(): DataSource.Factory<Int, MovieEntity>
+    @Query("SELECT * FROM movie ORDER BY id ASC limit :requestedLoadSize")
+    fun getAllMovies(requestedLoadSize: Int): List<MovieEntity>
+
+    @Query("SELECT * FROM movie WHERE id > :key ORDER BY id ASC limit :requestedLoadSize")
+    fun getAllMoviesAfter(key: Int, requestedLoadSize: Int): List<MovieEntity>
 
     @Query("SELECT * FROM movie WHERE id == :id")
     suspend fun findMovieById(id: Int): List<MovieEntity>

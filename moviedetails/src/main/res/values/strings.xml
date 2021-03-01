@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="review">Review</string>
+    <string name="no_review">No review yet</string>
+    <string name="description">Description</string>
     <string name="marked_favorite_movies">You marked this movie as your favorite</string>
     <string name="unmarked_favorite_movies">You unmarked this movie as your favorite</string>
 </resources>

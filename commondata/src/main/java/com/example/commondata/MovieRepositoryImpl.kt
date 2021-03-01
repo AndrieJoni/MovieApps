@@ -11,6 +11,17 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDao: MovieDao,
 ) : MovieRepository {
 
+    override suspend fun getAllMovieFromLocal(requestedLoadSize: Int): List<Movie> {
+        return movieDao.getAllMovies(requestedLoadSize).map { it.toMovie() }
+    }
+
+    override suspend fun getAllMoviesFromLocalAfter(
+        key: Int,
+        requestedLoadSize: Int
+    ): List<Movie> {
+        return movieDao.getAllMoviesAfter(key, requestedLoadSize).map { it.toMovie() }
+    }
+
     override suspend fun getMovieByIdFromLocal(movieId: Int): List<Movie> {
         return movieDao.findMovieById(movieId).map {
             it.toMovie()

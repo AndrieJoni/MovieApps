@@ -1,40 +1,40 @@
-package stickearn.movie.stickearnmovieapps.view.movieFavorite.presentation
+package com.example.moviefavorite
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.commonui.MovieModel
+import com.example.moviefavorite.databinding.AdapterFavoriteMovieBinding
 import com.squareup.picasso.Picasso
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import stickearn.movie.stickearnmovieapps.R
-import stickearn.movie.stickearnmovieapps.databinding.AdapterFavoriteMovieBinding
 
 class FavoriteMovieViewHolder(
-    val adapterFavoriteMovieBinding: AdapterFavoriteMovieBinding
+    private val adapterFavoriteMovieBinding: AdapterFavoriteMovieBinding
 ) : RecyclerView.ViewHolder(
     adapterFavoriteMovieBinding.root
 ) {
 
-    fun renderView(movieEntity: com.example.basedata.local.MovieEntity) {
+    fun renderView(movieModel: MovieModel) {
 
         Picasso
-            .get()
+            .Builder(itemView.context).build()
             .load(
                 String.format(
                     "%s/t/p/w500/%s",
                     com.example.commondata.BuildConfig.BASE_TMDB_IMAGE_URL,
-                    movieEntity.imageUrl
+                    movieModel.posterImage
                 )
             )
             .placeholder(R.drawable.ic_baseline_image_24)
             .fit()
             .into(adapterFavoriteMovieBinding.ivFavoriteMovie)
 
-        adapterFavoriteMovieBinding.tvMovieTitle.text = movieEntity.title
+        adapterFavoriteMovieBinding.tvMovieTitle.text = movieModel.title
 
         adapterFavoriteMovieBinding.tvMovieReleaseDate.text = LocalDate.parse(
-            movieEntity.releaseDate,
+            movieModel.releaseDate,
             DateTimeFormatter.ofPattern("yyyy-MM-dd")
         ).format(DateTimeFormatter.ofPattern("LLL dd,yyyy"))
 
-        adapterFavoriteMovieBinding.tvMovieDescription.text = movieEntity.description
+        adapterFavoriteMovieBinding.tvMovieDescription.text = movieModel.overview
     }
 }

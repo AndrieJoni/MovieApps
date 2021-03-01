@@ -166,7 +166,7 @@ class HomeMovieActivity : AppCompatActivity() {
     }
 
     private fun goToFavoriteMovieEvent() {
-        //      startActivity(Intent(this, FavoriteMovieActivity::class.java))
+        startActivity(Navigation.openFavoriteMovie(this))
     }
 
     private fun refreshPopularMovie() {

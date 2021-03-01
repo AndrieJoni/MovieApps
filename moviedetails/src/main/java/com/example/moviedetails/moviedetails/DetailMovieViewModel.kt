@@ -69,17 +69,11 @@ class DetailMovieViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            try {
+            if (movieData != null)
+                isFavorite = isMovieMarkedAsFavoriteUseCase.invoke(movieData!!.toMovie())
 
-                if (movieData != null)
-                    isFavorite = isMovieMarkedAsFavoriteUseCase.invoke(movieData!!.toMovie())
-
-                withContext(Dispatchers.Main) {
-                    changeFavoriteIconColorEvent.value = isFavorite
-                }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            withContext(Dispatchers.Main) {
+                changeFavoriteIconColorEvent.value = isFavorite
             }
         }
     }
@@ -88,20 +82,14 @@ class DetailMovieViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            try {
+            if (movieData != null) {
 
-                if (movieData != null) {
+                isFavorite = markedMovieUseCase.invoke(movieData!!.toMovie())
 
-                    isFavorite = markedMovieUseCase.invoke(movieData!!.toMovie())
-
-                    withContext(Dispatchers.Main) {
-                        saveFavoriteMovieEvent.value = isFavorite
-                        changeFavoriteIconColorEvent.value = isFavorite
-                    }
+                withContext(Dispatchers.Main) {
+                    saveFavoriteMovieEvent.value = isFavorite
+                    changeFavoriteIconColorEvent.value = isFavorite
                 }
-
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
     }

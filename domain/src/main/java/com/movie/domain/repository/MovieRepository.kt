@@ -5,6 +5,10 @@ import com.movie.domain.entity.MovieReview
 
 interface MovieRepository {
 
+    suspend fun getAllMovieFromLocal(requestedLoadSize: Int): List<Movie>
+
+    suspend fun getAllMoviesFromLocalAfter(key: Int, requestedLoadSize: Int): List<Movie>
+
     suspend fun getMovieByIdFromLocal(movieId: Int): List<Movie>
 
     suspend fun insertMovieToLocal(movie: Movie): Long

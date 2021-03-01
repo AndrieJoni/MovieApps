@@ -12,7 +12,7 @@ class MarkedMovieUseCase @Inject constructor(
 
     override suspend fun invoke(parameter: Movie): Boolean {
 
-        return if (isMovieMarkedAsFavoriteUseCase.invoke(parameter)) {
+        return if (isMovieMarkedAsFavoriteUseCase.invoke(parameter).not()) {
             movieRepository.insertMovieToLocal(parameter)
             true
         } else {

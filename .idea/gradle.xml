@@ -12,15 +12,19 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/basedata" />
-            <option value="$PROJECT_DIR$/commondata" />
-            <option value="$PROJECT_DIR$/commonui" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/home" />
-            <option value="$PROJECT_DIR$/moviedetails" />
-            <option value="$PROJECT_DIR$/moviefavorite" />
-            <option value="$PROJECT_DIR$/navigation" />
-            <option value="$PROJECT_DIR$/util" />
+            <option value="$PROJECT_DIR$/domain-di" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/commondata" />
+            <option value="$PROJECT_DIR$/features/commonui" />
+            <option value="$PROJECT_DIR$/features/home" />
+            <option value="$PROJECT_DIR$/features/moviedetails" />
+            <option value="$PROJECT_DIR$/features/moviefavorite" />
+            <option value="$PROJECT_DIR$/libraries" />
+            <option value="$PROJECT_DIR$/libraries/basedata" />
+            <option value="$PROJECT_DIR$/libraries/navigation" />
+            <option value="$PROJECT_DIR$/libraries/util" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

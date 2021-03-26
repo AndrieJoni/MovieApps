@@ -10,8 +10,7 @@ java {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
     implementation "com.google.dagger:hilt-android:2.31-alpha"
     kapt "com.google.dagger:hilt-android-compiler:2.31.2-alpha"
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
 }

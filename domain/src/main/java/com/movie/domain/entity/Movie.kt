@@ -2,7 +2,7 @@ package com.movie.domain.entity
 
 data class Movie(
 
-    var posterPath: String = "",
+    var posterPath: String? = "",
 
     var isAdult: Boolean = false,
 
@@ -20,7 +20,7 @@ data class Movie(
 
     var title: String = "",
 
-    var backdropPath: String = "",
+    var backdropPath: String? = "",
 
     var popularity: Double = 0.0,
 
